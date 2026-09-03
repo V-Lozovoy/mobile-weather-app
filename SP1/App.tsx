@@ -13,9 +13,13 @@ import { MOCK_CITIES } from './src/data/mocks'
 // мережі (S3). Один екран, одна картка, одна кнопка.
 
 export default function App() {
-  const [cityNumber, setCityNumber] = useState(0)
+const [cityIndex, setCityIndex] = useState(0)
 
-  const city = MOCK_CITIES[cityNumber]
+const city = MOCK_CITIES[cityIndex]
+
+const nextCity = () => {
+  setCityIndex(currentIndex => (currentIndex + 1) % MOCK_CITIES.length)
+}
 
   return (
     <View style={styles.screen}>
@@ -36,10 +40,10 @@ export default function App() {
       */}
       
       <View style={styles.cityCard}>
-        <Text>{city.name}</Text>
-        <Text>{city.country}</Text>
-        <Text>{city.temperature}</Text>
-        <Text>{city.condition}</Text>
+        <Text style={styles.cityName}>{city.name}</Text>
+        <Text style={styles.cityCountry}>{city.country}</Text>
+        <Text style={styles.cityTemperature}>{city.temperature}&deg;C</Text>
+        <Text style={styles.cityCondition}>{city.condition}</Text>
       </View>
 
       {/*
@@ -53,8 +57,14 @@ export default function App() {
           Імпорти додасте самі: useState із 'react', Pressable із 'react-native'.
       */}
       
-
-
+      <Pressable style={({ pressed}) => [
+        styles.button,
+        pressed && styles.pressedButton,
+      ]}
+      onPress={nextCity}
+      >
+        <Text style={styles.buttonText}>Next city</Text>
+      </Pressable>
     </View>
   )
 }
@@ -79,5 +89,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 10
+  },
+  cityName: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  cityCountry: {
+    fontSize: 18,
+    color: '#6b7280',
+    marginBottom: 8,
+  },
+  cityTemperature: {
+    fontSize: 36,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  cityCondition: {
+    fontSize: 16,
+    color: '#6b7280',
+  },
+  button: {
+    backgroundColor: '#275a91',
+    marginTop: 16,
+    padding: 16,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  pressedButton: {
+    backgroundColor: '#15467a',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: '700',
   },
 })
