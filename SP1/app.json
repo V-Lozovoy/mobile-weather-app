@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "Weather App",
+    "slug": "weather",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "duan.weather",
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-status-bar"
+    ]
+  }
+}
