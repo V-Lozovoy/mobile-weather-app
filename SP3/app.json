@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Weather Data",
+    "slug": "weather-data-sp",
+    "version": "1.0.0",
+    "scheme": "weathercities",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "ua.duan.weatherdatasp",
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}

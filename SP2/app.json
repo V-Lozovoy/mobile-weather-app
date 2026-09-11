@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Weather Nav",
+    "slug": "weather-nav-sp",
+    "version": "1.0.0",
+    "scheme": "weathercities",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "ua.duan.weathernavsp",
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
