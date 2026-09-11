@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
-import { MANY_CITIES } from '../../src/data/many-cities'
-import { keyOf, rowOf } from '../../src/lib/row'
+import { MANY_CITIES } from '../../../SP2/src/data/many-cities'
+import { keyOf, rowOf } from '../../../SP2/src/lib/row'
 
 // Стрічка міст — запускається і працює, але двічі неправильно. Перше:
 // ScrollView монтує усі триста рядків одразу, ще до першого дотику — на

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-import { MANY_CITIES } from '../../src/data/many-cities'
-import { findCity } from '../../src/lib/cities'
+import { MANY_CITIES } from '../../../SP2/src/data/many-cities'
+import { findCity } from '../../../SP2/src/lib/cities'
 
 // Екран міста. Ім'я файлу [id] означає: частина маршруту після /city/
 // прилітає сюди параметром [S2 · 9 і 13]. Але поки цей код параметр не
