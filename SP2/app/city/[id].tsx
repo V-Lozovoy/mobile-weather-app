@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { MANY_CITIES } from '../../../SP2/src/data/many-cities'
 import { findCity } from '../../../SP2/src/lib/cities'
+import { useLocalSearchParams } from 'expo-router'
 
 // Екран міста. Ім'я файлу [id] означає: частина маршруту після /city/
 // прилітає сюди параметром [S2 · 9 і 13]. Але поки цей код параметр не
@@ -39,13 +40,24 @@ export default function CityScreen() {
     Обережно: 'c-1' і 'C-1' — різні рядки; id у many-cities пишуться
       маленькими.
   */
-  const city = findCity(MANY_CITIES, 'c-1')
+  const { id } = useLocalSearchParams<{ id: string }>()
+  const city = findCity(MANY_CITIES, id)
 
-  if (!city) return null
+  if (!city) {
+    return (
+      <View style={styles.screen}>
+        <Text style={styles.name}>Місто не знайдено</Text>
+        <Text style={styles.meta}>id {String(id)} немає у списку міст</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.name}></Text>
+      <Text style={styles.name}>{city.name}</Text>
+      <Text style={styles.meta}>{city.country}</Text>
+      <Text style={styles.temperature}>{city.temperature}&deg;C</Text>
+      <Text style={styles.condition}>{city.condition}</Text>
     </View>
   )
 }
@@ -60,4 +72,6 @@ const styles = StyleSheet.create({
   },
   name: { fontSize: 30, fontWeight: '700' },
   meta: { fontSize: 15, color: '#6b7280', marginTop: 4 },
+  temperature: { fontSize: 24, fontWeight: '700', marginTop: 8 },
+  condition: { fontSize: 18, color: '#6b7280', marginTop: 4 },
 })

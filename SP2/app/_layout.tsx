@@ -12,6 +12,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ title: 'Cities' }} />
 
+        <Stack.Screen name="city/[id]" options={{ title: 'City' }} />
+
         {/*
           TODO(2) [SP2 · S2 слайд 11 — другий екран у Stack]:
             екран міста лежить файлом app/city/[id].tsx, але в цій розкладці

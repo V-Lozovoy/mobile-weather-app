@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons'
 
 // ДАНО, майже готове: навігатор табів уже з'єднує обидва екрани цієї групи
 // (імена — від імен файлів) і дає кожному заголовок. Шапки табів прибрані
@@ -18,10 +19,7 @@ import { Tabs } from 'expo-router'
 
 //   import { Ionicons } from '@expo/vector-icons'
 
-//   const ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
-//     index: 'list',
-//     explore: 'search',
-//   }
+
 
 //   <Tabs
 //     screenOptions={({ route }) => ({
@@ -34,11 +32,24 @@ import { Tabs } from 'expo-router'
 // Перевірка: під кожним табом з'являється картинка, а не лише текст;
 //   перемикання табів не губить скрол стрічки.
 
+const ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
+    index: 'list',
+    explore: 'search',
+  }
+
 export default function Layout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen name="index" options={{ title: 'Cities' }} />
-      <Tabs.Screen name="explore" options={{ title: 'Explore' }} />
+    <Tabs screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name={ICONS[route.name] ?? 'ellipse'} size={size} color={color} />
+      ),
+    })}
+  >
+
+    <Tabs.Screen name="index" options={{ title: 'Cities' }}/>
+    <Tabs.Screen name="explore" options={{ title: 'Explore' }}/>
+    
     </Tabs>
   )
 }

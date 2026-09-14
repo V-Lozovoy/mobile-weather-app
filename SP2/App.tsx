@@ -26,18 +26,6 @@ const nextCity = () => {
       <StatusBar style="dark" />
 
       <Text style={styles.title}>Weather</Text>
-
-      {/*
-        TODO(1) [SP1 · S1 слайди 18 і 20 — core-компоненти, StyleSheet]:
-          замініть підказку нижче на перше місто з MOCK_CITIES.
-          Треба: <View>-картка із <Text> усередині — ім'я міста, країна, поточна
-                 температура і погода словами. Усі чотири значення — це поля
-                 MOCK_CITIES[0]; надрукуйте їх, а не переписуйте руками.
-          Верстка: розширте StyleSheet унизу — картка це фон, трохи відступів
-                 і заокруглений кут. Числа в стилях — без одиниць.
-          Обережно: кожен рядок живе всередині <Text>. <View>{city.name}</View> —
-                 червоний екран на пристрої, а не попередження.
-      */}
       
       <View style={styles.cityCard}>
         <Text style={styles.cityName}>{city.name}</Text>
@@ -46,17 +34,6 @@ const nextCity = () => {
         <Text style={styles.cityCondition}>{city.condition}</Text>
       </View>
 
-      {/*
-        TODO(2) [SP1 · S1 слайд 18 — Pressable у зразку CityCard]:
-          зробіть екран інтерактивним: <Pressable> із <Text>-підписом («Next city»),
-          який змінює картку на наступне місто з MOCK_CITIES — і після останнього
-          замикає цикл на першому.
-          Як: один useState тримає індекс показаного міста; onPress робить крок уперед
-                 (остача % замикає цикл). Це простий React, який ви вже знаєте, — тема
-                 «де має жити значення» це L5, одному екрану вона сьогодні не потрібна.
-          Імпорти додасте самі: useState із 'react', Pressable із 'react-native'.
-      */}
-      
       <Pressable style={({ pressed}) => [
         styles.button,
         pressed && styles.pressedButton,
