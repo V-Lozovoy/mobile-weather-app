@@ -4,6 +4,6 @@
     "strict": true,
     "resolveJsonModule": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"],src/data/cities.ts
   "exclude": ["node_modules", "scripts"]
 }

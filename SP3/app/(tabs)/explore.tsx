@@ -6,7 +6,7 @@ export default function ExploreScreen() {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Explore</Text>
-      <Text style={styles.hint}>Тут буде пошук міст — у наступних практичних</Text>
+      <Text style={styles.hint}>Тут буде пошук міст — у SP4.</Text>
     </View>
   )
 }

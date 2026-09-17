@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Weather Data",
-    "slug": "weather-data-sp",
+    "name": "Weather Nav",
+    "slug": "weather-nav-sp",
     "version": "1.0.0",
     "scheme": "weathercities",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "ua.duan.weatherdatasp",
+      "package": "ua.duan.weathernavsp",
       "predictiveBackGestureEnabled": false
     },
     "plugins": [
