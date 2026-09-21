@@ -14,6 +14,14 @@ export const WEATHERAPI_KEY = 'ddfb0c0d623f4b5aadb192437261009'
  * WeatherResponse у src/types.ts.
  */
 export function buildWeatherUrl(city: string): string {
+  const params = new URLSearchParams({
+    key: WEATHERAPI_KEY,
+    q: city,
+    days: '3',
+  })
+
+  return `https://api.weatherapi.com/v1/forecast.json?${params.toString()}`
+  
   /*
     Як зробити — зберіть параметри в URLSearchParams і приклейте їх до бази:
 
@@ -23,5 +31,4 @@ export function buildWeatherUrl(city: string): string {
     Перевірка: готовий URL у браузері показує location, current і forecast —
     ті самі поля, що читає екран погоди.
   */
-  return ''
 }

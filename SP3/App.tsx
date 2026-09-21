@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import { useState } from 'react'
 
-import { MOCK_CITIES } from './src/data/mocks'
+import { CITIES } from './src/data/cities'
 
 // ДАНО — оболонка нижче готова: вона запускається і показує екран. Сьогодні ви пишете
 // лише те, що названо у двох TODO, і обидва — в цьому одному файлі. Усе для даних уже
@@ -13,25 +13,25 @@ import { MOCK_CITIES } from './src/data/mocks'
 // мережі (S3). Один екран, одна картка, одна кнопка.
 
 export default function App() {
-const [cityIndex, setCityIndex] = useState(0)
+  const [cityIndex, setCityIndex] = useState(0)
 
-const city = MOCK_CITIES[cityIndex]
+  const city = CITIES[cityIndex]
 
-const nextCity = () => {
-  setCityIndex(currentIndex => (currentIndex + 1) % MOCK_CITIES.length)
-}
+  const nextCity = () => {
+    setCityIndex((currentIndex) => (currentIndex + 1) % CITIES.length)
+  }
 
   return (
     <View style={styles.screen}>
       <StatusBar style="dark" />
 
       <Text style={styles.title}>Weather</Text>
-      
+
       <View style={styles.cityCard}>
         <Text style={styles.cityName}>{city.name}</Text>
         <Text style={styles.cityCountry}>{city.country}</Text>
-        <Text style={styles.cityTemperature}>{city.temperature}&deg;C</Text>
-        <Text style={styles.cityCondition}>{city.condition}</Text>
+        <Text style={styles.cityTemperature}>City #{cityIndex + 1}</Text>
+        <Text style={styles.cityCondition}>ID: {city.id}</Text>
       </View>
 
       <Pressable style={({ pressed}) => [

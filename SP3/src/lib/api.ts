@@ -9,5 +9,12 @@ import { buildWeatherUrl } from './urls'
  * Предмет TODO(2) [S3 · 5]: живий запит до WeatherAPI. Ужийте fetch() та buildWeatherUrl(city)
   */
 export async function fetchWeather(city: string): Promise<WeatherResponse> {
-  throw new Error('Запит ще не написано — це TODO(2)')
+  const response = await fetch(buildWeatherUrl(city))
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null)
+    throw new Error(body?.error?.message ?? `HTTP ${response.status}`)
+  }
+
+  return response.json()
 }
