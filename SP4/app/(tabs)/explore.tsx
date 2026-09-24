@@ -6,6 +6,7 @@ import { MANY_CITIES } from '../../src/data/many-cities'
 import { applyFilters, type CityFilter } from '../../src/lib/filters'
 import { cityPath } from '../../src/lib/cities'
 import { useRequestCounter } from '../../src/lib/counter'
+import { useFiltersStore } from '../../src/store/filters'
 
 // Таб Explore: пошук міст і фільтри. Сьогодні він працює - і працює погано,
 // причому наочно: наберіть «Dnipro» - лічильник угорі нарахує шість «запитів»,
@@ -22,8 +23,11 @@ const FILTER_LABEL: Record<CityFilter, string> = {
 }
 
 export default function ExploreScreen() {
-  const [query, setQuery] = useState('')
-  const [filter, setFilter] = useState<CityFilter>('all')
+  const query = useFiltersStore((s) => s.query)
+  const setQuery = useFiltersStore((s) => s.setQuery)
+  const filter = useFiltersStore((s) => s.filter)
+  const setFilter = useFiltersStore((s) => s.setFilter)
+  
   const [results, setResults] = useState<typeof MANY_CITIES>([])
   const { count, bump } = useRequestCounter()
 
@@ -35,16 +39,17 @@ export default function ExploreScreen() {
     Каркас - розкоментуйте і підключіть: ефект пошуку нижче має
       спрацьовувати на відкладене значення, а не на кожну літеру:
 
-      // const [debounced, setDebounced] = useState('')
-      // useEffect(() => {
-      //   const timer = setTimeout(() => setDebounced(query), 400)
-      //   return () => clearTimeout(timer) // нова літера скасовує старий
-      // }, [query])
-
     Перевірка: набрати «Dnipro» - лічильник 1, не 6.
   */
+
+  const [debounced, setDebounced] = useState('')
+      useEffect(() => {
+        const timer = setTimeout(() => setDebounced(query), 400)
+        return () => clearTimeout(timer) // нова літера скасовує старий
+      }, [query])
+
   useEffect(() => {
-    if (!query) {
+    if (!debounced) {
       setResults([])
       return
     }
@@ -52,10 +57,10 @@ export default function ExploreScreen() {
     // «Запит»: локальний пошук по MANY_CITIES без мережі - сьогодні важлива
     // не форма запиту, а його частота.
     const byName = MANY_CITIES.filter((c) =>
-      c.name.toLowerCase().includes(query.toLowerCase()),
+      c.name.toLowerCase().includes(debounced.toLowerCase()),
     )
-    setResults(applyFilters(byName, { query, filter }))
-  }, [query, filter])
+    setResults(applyFilters(byName, { query: debounced, filter }))
+  }, [debounced, filter])
 
   /*
     TODO(2) [SP4 · S4 слайд 9 - стор поза деревом]:

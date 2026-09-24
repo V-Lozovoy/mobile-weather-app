@@ -4,20 +4,27 @@
 //
 // TODO(2) — розкоментуйте каркас стору (слайд 9):
 //
-//   import { create } from 'zustand'
-//   import { INITIAL_FILTERS, type CityFilter, type Filters } from '../lib/filters'
-//
-//   type FiltersState = Filters & {
-//     setQuery: (query: string) => void
-//     setFilter: (filter: CityFilter) => void
-//   }
-//
-//   export const useFiltersStore = create<FiltersState>()((set) => ({
-//     ...INITIAL_FILTERS,
-//     setQuery: (query) => set({ query }),
-//     setFilter: (filter) => set({ filter }),
-//   }))
-//
+import { create } from 'zustand'
+import { INITIAL_FILTERS, type CityFilter, type Filters } from '../lib/filters'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createJSONStorage, persist } from 'zustand/middleware'
+
+type FiltersState = Filters & {
+    setQuery: (query: string) => void
+    setFilter: (filter: CityFilter) => void
+}
+
+export const useFiltersStore = create<FiltersState>()(
+    persist((set) => ({
+    ...INITIAL_FILTERS,
+    setQuery: (query) => set({ query }),
+    setFilter: (filter) => set({ filter }),
+    }),
+    { name: 'filters', storage: createJSONStorage(() => AsyncStorage) },
+    ),
+)
+
+
 // TODO(4) — потім обгорніть його в persist (слайд 14): create<…>()(
 //   persist((set) => ({ …як вище… }), { name: 'filters',
 //   storage: createJSONStorage(() => AsyncStorage) })). Імпорти:

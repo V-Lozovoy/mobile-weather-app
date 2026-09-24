@@ -41,5 +41,13 @@ export function applyFilters(
   cities: CityWithWeather[],
   filters: Filters,
 ): CityWithWeather[] {
-  return cities
-}
+  return cities.filter((c) => {
+     if (filters.filter !== 'all' && cityCondition(c) !== filters.filter) {
+      return false
+     }
+     if (filters.query && !c.name.toLowerCase().includes(filters.query.toLowerCase())) {
+      return false
+     }
+     return true
+    })
+  }
