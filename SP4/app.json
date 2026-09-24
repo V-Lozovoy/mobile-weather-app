@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Weather Filters",
+    "slug": "weather-filters-sp",
+    "version": "1.0.0",
+    "scheme": "weathercities",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "ua.duan.weatherfilterssp",
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
