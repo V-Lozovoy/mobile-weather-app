@@ -9,7 +9,6 @@ import migrations from '../drizzle/migrations'
 import { db } from '../src/db/client'
 import { seedIfEmpty } from '../src/db/seed'
 import { syncForecasts } from '../src/lib/sync'
-import { cities } from '../src/db/schema'
 
 const queryClient = new QueryClient()
 
