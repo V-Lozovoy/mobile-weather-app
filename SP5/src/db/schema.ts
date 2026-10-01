@@ -14,6 +14,25 @@ export const cities = sqliteTable('cities', {
   // text('...') — це і тип колонки, і її ім'я в базі (в апострофах).
   id: text('id').primaryKey(),
   name: text('name').notNull(),
+  country: text('country').notNull(),
+  admin1: text('admin1'),
+  latitude: real('latitude').notNull(),
+  longitude: real('longitude').notNull(),
+  sortOrder: integer('sort_order').notNull(),
+  favorite: integer('favorite', { mode: 'boolean' }).notNull(),
+  createdAt: text('created_at').notNull()
+})
+
+export const forecast_cache = sqliteTable('forecast_cache', {
+  cityId: text('city_id').primaryKey(),
+  temperature: real('temperature').notNull(),
+  condition: text('condition').notNull(),
+  weatherCode: integer('weather_code'),
+  windSpeed: real('wind_speed'),
+  hourlyJson: text('hourly_json').notNull(),
+  dailyJson: text('daily_json'),
+  syncedAt: text('synced_at').notNull()
+})
 
   // TODO(1) [SP5 · S5 слайди 8–9]:
   //   допишіть решту колонок cities і всю таблицю forecast_cache.
@@ -42,4 +61,3 @@ export const cities = sqliteTable('cities', {
   //   не перейменовується саме. weatherCode, windSpeed і dailyJson лишаються
   //   nullable, але заповнює їх уже синк: WeatherAPI віддає condition.code,
   //   wind_kph і денний підсумок на три дні разом із поточною погодою.
-})

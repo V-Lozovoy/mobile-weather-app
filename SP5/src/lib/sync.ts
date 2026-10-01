@@ -1,3 +1,33 @@
+import { db } from '../db/client'
+import { cities, forecast_cache } from '../db/schema'
+import { fetchWeatherForCities } from './api'
+
+
+export async function syncForecasts(): Promise<void> {
+  const rows = db.select().from(cities).all()
+  const answers = await fetchWeatherForCities(rows)
+
+  db.transaction((tx) => {
+    for (const { id, weather } of answers) {
+      const today = weather.forecast.forecastday[0]
+      const values = {
+        cityId: id,
+        temperature: weather.current.temp_c,
+        condition: weather.current.condition.text,
+        weatherCode: weather.current.condition.code,
+        windSpeed: weather.current.wind_kph,
+        hourlyJson: JSON.stringify(today.hour),
+        dailyJson: JSON.stringify(weather.forecast.forecastday.map((d) => d.day)),
+        syncedAt: new Date().toISOString(),
+      }
+      tx.insert(forecast_cache)
+        .values(values)
+        .onConflictDoUpdate({ target: forecast_cache.cityId, set: values })
+        .run()
+    }
+  })
+}
+
 // Синк прогнозів: API → SQLite, однією транзакцією, у таблицю forecast_cache.
 // Ключ рядка — city_id: один рядок на місто, нова відповідь затирає стару.
 // Далі за цим кешем живе стрічка: мережі нема — температури є.
@@ -43,8 +73,3 @@
   //   }
   // })
 */
-export async function syncForecasts(): Promise<void> {
-  // Заглушка: кеш не наповнюється, тому в стрічці замість температур стоять
-  // прочерки. Перевірити це можна і в базі —
-  // console.log(db.select().from(forecast_cache).all()).
-}

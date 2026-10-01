@@ -3,7 +3,11 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { router } from 'expo-router'
 import { cityPath } from '../../src/lib/cities'
 import { keyOf } from '../../src/lib/row'
-import { useCitiesStore } from '../../src/store/cities'
+import { eq } from 'drizzle-orm' 
+import { db } from '../../src/db/client'
+import { useLiveQuery } from '../../src/db/live'
+import {cities, forecast_cache} from '../../src/db/schema'
+import { useEffect } from 'react'
 
 // Стрічка міст. Усі попередні пари список читав із файла чи зі стору — і він
 // зникав разом із запуском. Сьогодні у нього з'являється дім: SQLite у
@@ -19,13 +23,21 @@ import { useCitiesStore } from '../../src/store/cities'
 
 export default function CitiesScreen() {
   // Стартова позиція: міста з пам'яті, погоди в них немає — тому прочерки.
-  const cities: FeedRow[] = useCitiesStore((s) => s.cities).map((c) => ({
-    id: c.id,
-    name: c.name,
-    country: c.country,
-    temperature: null,
-    condition: null,
-  }))
+  const { data: rows, error } = useLiveQuery<FeedRow[]>(
+    () => db.select({
+      id: cities.id,
+      name: cities.name,
+      country: cities.country,
+      temperature: forecast_cache.temperature,
+      condition: forecast_cache.condition,
+    })
+    .from(cities)
+    .leftJoin(forecast_cache, eq(cities.id, forecast_cache.cityId))
+    .orderBy(cities.sortOrder)
+    .all(),
+  [],)
+
+  const feed = rows ?? []
 
   /*
     TODO(3) [SP5 · S5 слайди 15 і 18 — читання з бази]:
@@ -68,7 +80,7 @@ export default function CitiesScreen() {
 
   return (
     <FlatList
-      data={cities}
+      data={feed}
       renderItem={({ item }) => <CityCard city={item} />}
       keyExtractor={keyOf}
       contentContainerStyle={styles.list}
